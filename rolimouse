@@ -1,0 +1,75 @@
+import tkinter
+from tkinter import *
+from tkinter import ttk
+import mouse
+
+
+
+#window
+root = Tk()
+root.title('RoliMouse')
+root.geometry("400x400")
+root.iconbitmap()
+
+#getting the mouse position and converting to int
+position1 = str(mouse.get_position())
+list = position1.split(",")
+position1str = list[0]
+position2str =list[1]
+position1int = int(position1str.replace("(",""))
+position2int = int(position2str.replace(")",""))
+print(position1)
+timer_input =tkinter.IntVar()
+timer =timer_input
+
+
+
+def set():
+    timer = timer_input.get()
+    my_progress.start(timer * 10)
+    # mouse.move(position1int - 500, position2int)
+
+
+
+#stop button function
+def stop():
+    value =my_progress['value']
+    my_progress.stop()
+    my_progress['value'] = value
+
+
+#reset function
+def reset():
+    my_progress.stop()
+
+
+#progress bar creation
+my_progress = ttk.Progressbar(root, orient=HORIZONTAL, length = 300, mode='determinate')
+
+#input box and lable
+duration_label = tkinter.Label(root, text="Duration:")
+duration =tkinter.Entry(root,textvariable=timer_input)
+#buttons
+set_button =Button(root,text="Set", command =set)
+# start_button = Button(root, text="Start", command =step)
+stop_button = Button(root,text="Stop",command=stop)
+reset_button =Button(root,text="Reset", command=reset)
+
+# #moving the mouse
+# while timer != True:
+#         mouse.move(position1int+500,position2int)
+#           time.sleep(0.5)
+         # mouse.move(position1int-500,position2int)
+#         time.sleep(timer)
+#         print(position1)
+
+
+#display
+my_progress.pack()
+# start_button.pack()
+stop_button.pack()
+reset_button.pack()
+set_button.pack()
+duration_label.pack()
+duration.pack()
+root.mainloop()
